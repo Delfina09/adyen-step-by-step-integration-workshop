@@ -43,7 +43,12 @@ public class ApiController {
     // Step 7
     @PostMapping("/api/paymentMethods")
     public ResponseEntity<PaymentMethodsResponse> paymentMethods() throws IOException, ApiException {
+        var paymentMethodsRequest = new PaymentMethodsRequest();
+        paymentMethodsRequest.setMerchantAccount(applicationConfiguration.getAdyenMerchantAccount());
 
+        log.info("Retrieving available Payment Methods from Adyen {}", paymentMethodsRequest);
+        var response = paymentsApi.paymentMethods(paymentMethodsRequest);
+        log.info("Payment Methods response from Adyen {}", response);
         return ResponseEntity.ok().body(null);
     }
 
